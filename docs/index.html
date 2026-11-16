@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#0b1020">
+<meta name="description" content="uAgent — открытый проект локального ИИ-агента для Windows: честный журнал разработки, инструкции запуска, архитектура и новости.">
+<meta property="og:title" content="uAgent — локальный ИИ и агент на вашем ПК">
+<meta property="og:description" content="Публичный журнал разработки. От первой модели до безопасного агента с памятью, GitHub и мобильным управлением.">
+<title>uAgent — локальный ИИ-агент · Sunpole</title>
+<style>
+:root{color-scheme:dark;--bg:#090d18;--panel:#131a2a;--edge:#2b354a;--text:#eaf1fb;--muted:#a9b8ce;--blue:#78b6ff;--mint:#7ce0bf;--max:1060px}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;font:16px/1.65 system-ui,-apple-system,"Segoe UI",Arial,sans-serif;color:var(--text);background:radial-gradient(ellipse 80% 40% at 78% -5%,#174462 0%,transparent 70%),var(--bg)}a{color:var(--blue);text-underline-offset:3px}a:hover{color:#bad7ff}a:focus-visible{outline:3px solid var(--mint);outline-offset:4px;border-radius:5px}.wrap{max-width:var(--max);margin:auto;padding:0 24px}.bar{border-bottom:1px solid var(--edge);background:#0b1020cc}.bar .wrap{min-height:74px;display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap;padding-top:12px;padding-bottom:12px}.brand{display:flex;align-items:center;gap:11px;color:var(--text);font-weight:800;letter-spacing:.01em;text-decoration:none;font-size:20px}.mark{display:inline-grid;place-items:center;height:43px;width:43px;border-radius:14px;color:#091420;background:linear-gradient(130deg,#80e4c3,#8dbbff);font-weight:900;letter-spacing:-.07em;box-shadow:0 8px 28px #0dbd9333}.nav{display:flex;flex-wrap:wrap;gap:17px;font-size:14px}.nav a{text-decoration:none;color:var(--muted)}.nav a:hover{color:var(--text)}
+.hero{padding-top:86px;padding-bottom:72px}.eyebrow{display:inline-flex;gap:8px;align-items:center;padding:5px 12px;border:1px solid #436c65;border-radius:999px;background:#15302d;color:#a8f3da;font-size:12px;font-weight:700;letter-spacing:.05em;text-transform:uppercase}.dot{height:7px;width:7px;border-radius:50%;background:#7ce0bf}h1{font-size:clamp(42px,8vw,80px);line-height:1.06;margin:22px 0 22px;letter-spacing:-.065em;max-width:890px}h1 span{background:linear-gradient(95deg,#9bc5ff,#81e3ca);-webkit-background-clip:text;background-clip:text;color:transparent}.lead{font-size:clamp(18px,2vw,22px);max-width:740px;color:var(--muted);line-height:1.6;margin:0}.actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:31px}.btn{display:inline-flex;align-items:center;gap:10px;justify-content:center;border-radius:12px;padding:13px 19px;text-decoration:none;font-weight:700;font-size:14px;min-height:48px;border:1px solid var(--edge);color:var(--text);background:#172236}.btn:hover{background:#253553;color:#fff}.btn.main{color:#09121b;background:linear-gradient(120deg,#8de3cc,#8dbdff);border-color:transparent}.btn.main:hover{filter:brightness(1.1);color:#09121b}.btn svg{width:20px;height:20px;fill:currentColor;flex-shrink:0}
+.metrics{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:48px}.metric{border:1px solid var(--edge);background:#121a29b3;border-radius:16px;padding:19px}.metric strong{display:block;font-size:20px;letter-spacing:-.02em}.metric small{display:block;color:var(--muted);font-size:13px;margin-top:4px}
+section{padding:36px 0}h2{letter-spacing:-.04em;font-size:clamp(27px,3.8vw,38px);line-height:1.2;margin:0 0 13px}p.note{color:var(--muted);max-width:740px;margin:0 0 22px}.cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}.card{border:1px solid var(--edge);background:linear-gradient(160deg,#172134,#101724);padding:24px;border-radius:18px;min-height:180px}.card h3{margin:13px 0 8px;font-size:18px;letter-spacing:-.025em}.card p{margin:0;font-size:14px;color:var(--muted)}.index{color:var(--mint);font-weight:800;font-size:13px}.timeline{list-style:none;padding:0;margin:0;border:1px solid var(--edge);border-radius:18px;overflow:hidden}.timeline li{display:flex;gap:18px;align-items:flex-start;padding:19px 23px;background:#121a29;border-bottom:1px solid var(--edge)}.timeline li:last-child{border:0}.time-dot{height:14px;width:14px;border-radius:50%;border:2px solid #6885aa;margin-top:6px;flex-shrink:0}.done .time-dot{background:var(--mint);border-color:var(--mint)}.timeline strong{display:block}.timeline span{color:var(--muted);font-size:14px}.notice{border:1px solid #3c5369;background:#122132;border-radius:18px;padding:24px;margin-top:24px}.notice strong{display:block;margin-bottom:8px}.notice p{margin:0;color:var(--muted)}.links{display:flex;flex-wrap:wrap;gap:12px;margin-top:20px}footer{padding:34px 0 52px;border-top:1px solid var(--edge);margin-top:48px;font-size:13px;color:var(--muted)}footer .wrap{display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap}.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)}
+@media(max-width:700px){.hero{padding-top:53px;padding-bottom:44px}.metrics,.cards{grid-template-columns:1fr}.metric{padding:14px 18px}.nav{gap:12px}.card{min-height:0}.btn{width:100%}section{padding:25px 0}.timeline li{padding:17px}.bar .wrap{gap:12px}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<header class="bar"><div class="wrap"><a class="brand" href="./" aria-label="uAgent — главная"><span class="mark" aria-hidden="true">uA</span>uAgent</a><nav class="nav" aria-label="Разделы"><a href="#about">О проекте</a><a href="#roadmap">План</a><a href="#progress">Прогресс</a><a href="#links">Ссылки</a></nav></div></header>
+<main>
+<div class="wrap hero">
+<div class="eyebrow"><span class="dot"></span> Open source · Разработка начата</div>
+<h1>Свой ИИ-агент.<br><span>На своём компьютере.</span></h1>
+<p class="lead">Публичный путь от первого запуска локальной модели до помощника, который понимает проекты, работает с файлами и GitHub и управляется с обычного мобильного браузера.</p>
+<div class="actions">
+<a class="btn main" href="https://github.com/sunpole/uAgent" rel="noopener">Исходный код на GitHub <span aria-hidden="true">↗</span></a>
+<a class="btn" href="https://t.me/uNewsLog" rel="noopener" aria-label="Канал uNews в Telegram">
+<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21.7 3.3a1 1 0 0 0-1-.17L2.8 10.1a1.4 1.4 0 0 0 .12 2.66l4.5 1.47 1.72 5.19a1.2 1.2 0 0 0 2.06.43l2.55-2.66 4.58 3.34a1.5 1.5 0 0 0 2.32-.91l2.06-15.32a1 1 0 0 0-1.01-1ZM9.1 13.25l9.58-7.34-7.2 8.8-.63 2.24-.9-2.72-.85-.28Z"/></svg>
+Telegram · uNews
+</a>
+</div>
+<div class="metrics"><div class="metric"><strong>Windows</strong><small>Целевая платформа</small></div><div class="metric"><strong>Local-first</strong><small>Модель и данные под контролем владельца</small></div><div class="metric"><strong>Открытая история</strong><small>Прогресс, инструкции, решения</small></div></div>
+</div>
+<section id="about"><div class="wrap"><h2>Что мы создаём</h2><p class="note">Практичный проект для реального домашнего компьютера, а не демонстрацию возможностей без результата.</p>
+<div class="cards"><article class="card"><span class="index">01 / МОДЕЛЬ</span><h3>Локальный ИИ</h3><p>Подбор и проверка небольших моделей на доступном оборудовании. Измеряем скорость и качество, не обещаем уровень облачных флагманов.</p></article>
+<article class="card"><span class="index">02 / ИНСТРУМЕНТЫ</span><h3>Агент разработки</h3><p>Память проектов, контролируемая работа с кодом, тесты и GitHub. Опасные действия — только после подтверждения.</p></article>
+<article class="card"><span class="index">03 / ДОСТУП</span><h3>Лёгкий веб-пульт</h3><p>Простой интерфейс для старого телефона. Тяжёлые вычисления остаются на домашнем ПК; удалённый доступ защищён.</p></article></div>
+</div></section>
+<section id="roadmap"><div class="wrap"><h2>Дорожная карта</h2><p class="note">Отмечаем выполненное только после проверки. Все этапы доступны в репозитории.</p>
+<ol class="timeline">
+<li class="done"><i class="time-dot" aria-hidden="true"></i><div><strong>01. Репозиторий создан</strong><span>16 ноября 2026 — GitHub, правила безопасности, исходная документация.</span></div></li>
+<li><i class="time-dot" aria-hidden="true"></i><div><strong>02. Первый запуск локальной модели</strong><span>Подбор модели, проверка производительности и русского языка. В работе.</span></div></li>
+<li><i class="time-dot" aria-hidden="true"></i><div><strong>03. Безопасный агент с тестами</strong><span>Изолированные задачи, проверка кода, контроль разрешений.</span></div></li>
+<li><i class="time-dot" aria-hidden="true"></i><div><strong>04. Память и GitHub</strong><span>Документы решений, история задач и Pull Request.</span></div></li>
+<li><i class="time-dot" aria-hidden="true"></i><div><strong>05. Мобильное управление</strong><span>Быстрый веб-интерфейс и защищённое соединение.</span></div></li>
+</ol></div></section>
+<section id="progress"><div class="wrap"><h2>Прогресс и запуск</h2><p class="note">Здесь публикуются подтверждённые результаты разработки. Инструкция по установке будет дополняться по мере появления работающего кода.</p>
+<div class="notice"><strong>Текущий статус: подготовка инфраструктуры</strong><p>Репозиторий создан. Рабочая локальная модель, агент и мобильный пульт пока не представлены. Первые измерения и команды запуска появятся после испытаний — без вымышленных результатов.</p></div>
+<div class="links"><a class="btn" href="https://github.com/sunpole/uAgent/blob/main/docs/PROGRESS.md">Журнал разработки ↗</a><a class="btn" href="https://github.com/sunpole/uAgent/blob/main/docs/LOCAL_SETUP.md">Инструкция по запуску ↗</a></div>
+</div></section>
+<section id="links"><div class="wrap"><h2>Следите за развитием</h2><p class="note">Обновления и реальные результаты — в GitHub. Готовые новости проекта будут публиковаться в Telegram через систему uNews.</p>
+<div class="actions"><a class="btn main" href="https://t.me/uNewsLog" rel="noopener">Канал «тыНовости» / uNews ↗</a><a class="btn" href="https://github.com/sunpole/uAgent/issues" rel="noopener">Задачи и обсуждения ↗</a></div></div></section>
+</main>
+<footer><div class="wrap"><span>© 2026 Sunpole · uAgent</span><span>GitHub Pages · Без аналитики, трекеров и сторонних скриптов</span></div></footer>
+</body></html>
