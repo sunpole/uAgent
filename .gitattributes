@@ -1,0 +1,13 @@
+# Stable text files across Windows, macOS and Linux.
+* text=auto
+*.md text eol=lf
+*.html text eol=lf
+*.json text eol=lf
+*.mjs text eol=lf
+*.js text eol=lf
+*.yml text eol=lf
+*.yaml text eol=lf
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.webp binary
