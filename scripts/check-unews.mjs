@@ -4,6 +4,7 @@ const {current,patches}=validateRelease();
 const names=readdirSync(pathAt("news")).filter(n=>/^\d{4}-\d{2}-\d{2}-.*\.md$/.test(n)).sort();
 const allowed=new Set(["intro","test","release","patch","bugfix","docs","documentation","audit","ui","feature","warning","idea","roadmap","report","note"]);
 let intros=0;
+const announcedVersions=new Set();
 for(const name of names){
  const source=readFileSync(pathAt("news",name),"utf8");
  const match=/^---\r?\n([\s\S]*?)\r?\n---\r?\n([\s\S]*)$/.exec(source);
@@ -17,6 +18,7 @@ for(const name of names){
   if(!meta[k])throw new Error("Отсутствует поле "+k+" в "+name);
  if(!allowed.has(meta.type)||meta.project!=="uAgent"||meta.series!=="uagent")throw new Error("Неверные проект, серия или тип");
  if(meta.type==="intro")intros++;
+ announcedVersions.add(meta.version);
  if(!VERSION_RE.test(meta.version)||cmpVersion(meta.version,current.version)>0||
    !patches.some(p=>p.version===meta.version))throw new Error("Версия uNews не найдена в истории uAgent");
  if(!/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z$/.test(meta.queued_at)||Number.isNaN(Date.parse(meta.queued_at)))throw new Error("Некорректное время UTC");
@@ -29,4 +31,5 @@ for(const name of names){
  if(/(?:ghp_[A-Za-z0-9]{20,}|github_pat_[A-Za-z0-9_]{20,}|sk-[A-Za-z0-9_-]{20,})/.test(source))throw new Error("Похоже на секрет в "+name);
 }
 if(names.length&&(!intros||names[0].includes("intro")===false))throw new Error("Первым постом uAgent должен быть intro");
+if(cmpVersion(current.version,"0.2.2")>=0 && !announcedVersions.has(current.version)) throw new Error("Выпуск "+current.version+" запрещён без отдельной публикации в news/ с реальным изображением (см. docs/UNEWS_POLICY.md)");
 console.log("uNews preflight: OK, готовых датированных записей: "+names.length+". Финальная проверка — в sunpole/uNews.");
