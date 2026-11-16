@@ -11,7 +11,7 @@ permissions:
 jobs:
   capture-real-screenshot:
     if: github.event.pull_request.head.repo.full_name == github.repository && github.event.pull_request.head.ref == 'feat/v0.2.2-first-ollama-unews-intro'
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 20
     steps:
       - name: Checkout owned PR head
