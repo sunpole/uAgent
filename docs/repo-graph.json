@@ -8,6 +8,10 @@
       "inbound": 0
     },
     {
+      "path": ".github/workflows/capture-v023.yml",
+      "inbound": 0
+    },
+    {
       "path": ".github/workflows/quality.yml",
       "inbound": 0
     },
@@ -44,6 +48,10 @@
       "inbound": 0
     },
     {
+      "path": "news/2026-11-16-uagent-windows-line-endings.md",
+      "inbound": 0
+    },
+    {
       "path": "news/README.md",
       "inbound": 0
     },
@@ -68,6 +76,10 @@
       "inbound": 0
     },
     {
+      "path": "patches/0.2.3.json",
+      "inbound": 0
+    },
+    {
       "path": "scripts/build.mjs",
       "inbound": 0
     },
@@ -78,6 +90,10 @@
     {
       "path": "scripts/check-versions.mjs",
       "inbound": 0
+    },
+    {
+      "path": "scripts/line-endings.mjs",
+      "inbound": 3
     },
     {
       "path": "scripts/new-patch.mjs",
@@ -116,6 +132,11 @@
     },
     {
       "from": "scripts/build.mjs",
+      "to": "scripts/line-endings.mjs",
+      "kind": "relative-reference"
+    },
+    {
+      "from": "scripts/build.mjs",
       "to": "scripts/release-core.mjs",
       "kind": "relative-reference"
     },
@@ -136,7 +157,17 @@
     },
     {
       "from": "scripts/repo-map.mjs",
+      "to": "scripts/line-endings.mjs",
+      "kind": "relative-reference"
+    },
+    {
+      "from": "scripts/repo-map.mjs",
       "to": "scripts/release-core.mjs",
+      "kind": "relative-reference"
+    },
+    {
+      "from": "tests/release.test.mjs",
+      "to": "scripts/line-endings.mjs",
       "kind": "relative-reference"
     },
     {

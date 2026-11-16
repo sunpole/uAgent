@@ -5,7 +5,7 @@
 ![Status](https://img.shields.io/badge/статус-разработка_начата-44546b?style=flat-square)
 
 <!-- UA_VERSION_START -->
-**Глобальная версия: v0.2.2** · [История](https://sunpole.github.io/uAgent/#updates)
+**Глобальная версия: v0.2.3** · [История](https://sunpole.github.io/uAgent/#updates)
 <!-- UA_VERSION_END -->
 
 **uAgent** — открытый журнал создания локального ИИ и безопасного агента разработки на домашнем Windows-ПК.
