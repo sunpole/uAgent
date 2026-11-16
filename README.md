@@ -4,13 +4,17 @@
 [![Telegram uNews](https://img.shields.io/badge/Telegram-тыНовости-26A5E4?style=flat-square&logo=telegram&logoColor=white)](https://t.me/uNewsLog)
 ![Status](https://img.shields.io/badge/статус-разработка_начата-44546b?style=flat-square)
 
+<!-- UA_VERSION_START -->
+**Глобальная версия: v0.2.0** · [История](https://sunpole.github.io/uAgent/#updates)
+<!-- UA_VERSION_END -->
+
 **uAgent** — открытый журнал создания локального ИИ и безопасного агента разработки на домашнем Windows-ПК.
 
 > **Важно:** это **начальная стадия**. Модель, агент и мобильный пульт пока **не реализованы**. Страница проекта и документация описывают план и подтверждённый прогресс, а не выдают будущие возможности за работающие.
 
 ### Ссылки
 
-- **[Сайт проекта — GitHub Pages](https://sunpole.github.io/uAgent/)** (после включения публикации в настройках GitHub).
+- **[Сайт проекта — GitHub Pages](https://sunpole.github.io/uAgent/)**.
 - **[Новости — Telegram «тыНовости» / @uNewsLog](https://t.me/uNewsLog)**.
 - [Журнал разработки](docs/PROGRESS.md).
 - [Установка и запуск](docs/LOCAL_SETUP.md) — проверенные команды будут добавлены после первых испытаний.
