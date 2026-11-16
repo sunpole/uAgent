@@ -1,0 +1,17 @@
+import {writeFileSync,existsSync} from "node:fs";
+import {execFileSync} from "node:child_process";
+import {validateRelease,bumpPatch,pathAt} from "./release-core.mjs";
+const opts={};
+for(let i=2;i<process.argv.length;i++)if(process.argv[i].startsWith("--"))opts[process.argv[i].slice(2)]=process.argv[++i]||"";
+if(!opts.title||!opts.summary)throw new Error("Укажите --title и --summary");
+const type=opts.type||"feature";
+if(!["foundation","website","feature","fix","docs","release","audit"].includes(type))throw new Error("Неизвестный тип патча");
+const {current}=validateRelease(),next=bumpPatch(current.version),date=new Date().toISOString().slice(0,10);
+const target=pathAt("patches",next+".json");
+if(existsSync(target))throw new Error("Патч уже существует");
+const record={version:next,date,type,title:opts.title.trim(),summary:opts.summary.trim(),tags:(opts.tags||"разработка").split(",").map(x=>x.trim()).filter(Boolean),details:[],verified:false};
+writeFileSync(target,JSON.stringify(record,null,2)+"\n");
+writeFileSync(pathAt("version.json"),JSON.stringify({...current,version:next,updated:date},null,2)+"\n");
+execFileSync(process.execPath,[pathAt("scripts","build.mjs")],{stdio:"inherit"});
+execFileSync(process.execPath,[pathAt("scripts","repo-map.mjs")],{stdio:"inherit"});
+console.log("Создан патч v"+next+". Добавьте детали и подтвердите verified только после тестов.");
