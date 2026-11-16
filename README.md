@@ -4,13 +4,17 @@
 [![Telegram uNews](https://img.shields.io/badge/Telegram-тыНовости-26A5E4?style=flat-square&logo=telegram&logoColor=white)](https://t.me/uNewsLog)
 ![Status](https://img.shields.io/badge/статус-разработка_начата-44546b?style=flat-square)
 
+<!-- UA_VERSION_START -->
+**Глобальная версия: v0.2.0** · [История](https://sunpole.github.io/uAgent/#updates)
+<!-- UA_VERSION_END -->
+
 **uAgent** — открытый журнал создания локального ИИ и безопасного агента разработки на домашнем Windows-ПК.
 
 > **Важно:** это **начальная стадия**. Модель, агент и мобильный пульт пока **не реализованы**. Страница проекта и документация описывают план и подтверждённый прогресс, а не выдают будущие возможности за работающие.
 
 ### Ссылки
 
-- **[Сайт проекта — GitHub Pages](https://sunpole.github.io/uAgent/)** (после включения публикации в настройках GitHub).
+- **[Сайт проекта — GitHub Pages](https://sunpole.github.io/uAgent/)**.
 - **[Новости — Telegram «тыНовости» / @uNewsLog](https://t.me/uNewsLog)**.
 - [Журнал разработки](docs/PROGRESS.md).
 - [Установка и запуск](docs/LOCAL_SETUP.md) — проверенные команды будут добавлены после первых испытаний.
@@ -51,3 +55,21 @@
 Автор: **[Sunpole](https://github.com/sunpole)** · Новости: **[тыНовости / uNews](https://t.me/uNewsLog)**
 
 *Открытый для просмотра код не означает автоматического предоставления права на повторное использование: условия лицензирования будут определены отдельно.*
+
+
+### Быстро добавить патч
+
+Сайт [uAgent](https://sunpole.github.io/uAgent/#updates) показывает все записи из `patches/*.json` (новые сверху). Не нужно вручную редактировать HTML:
+
+```powershell
+npm run patch:new -- --title "Новая функция" --type feature --tags "ИИ,код,тесты" --summary "Кратко о реальных изменениях"
+npm run check
+```
+
+Команда поднимает SemVer PATCH, обновляет единственный `version.json`, генерирует `version.md` и сайт. Подробности: [единая политика релизов](docs/RELEASE_POLICY.md).
+
+### Карта репозитория для ИИ
+
+[Файловый граф зависимостей](docs/REPO_MAP.md) и [JSON-граф](docs/repo-graph.json) формируются через `npm run graph`. Это стартовая навигационная карта, **не** полноценный анализ функций или вызовов. Расширение Tree-sitter/SCIP: [проектирование](docs/CODE_GRAPH.md).
+
+**uNews:** история всех патчей отображается на сайте; Telegram получает только подготовленные публикации с реальными изображениями и предварительной проверкой.
