@@ -1,0 +1,123 @@
+{
+  "schema": "uagent-file-graph-v1",
+  "scope": "tracked-and-unignored-files",
+  "precision": "file-relative-references-only-not-AST-or-call-graph",
+  "nodes": [
+    {
+      "path": ".github/workflows/quality.yml",
+      "inbound": 0
+    },
+    {
+      "path": "AGENTS.md",
+      "inbound": 0
+    },
+    {
+      "path": "README.md",
+      "inbound": 0
+    },
+    {
+      "path": "docs/CODE_GRAPH.md",
+      "inbound": 0
+    },
+    {
+      "path": "docs/LOCAL_SETUP.md",
+      "inbound": 0
+    },
+    {
+      "path": "docs/PROGRESS.md",
+      "inbound": 0
+    },
+    {
+      "path": "docs/RELEASE_POLICY.md",
+      "inbound": 0
+    },
+    {
+      "path": "news/README.md",
+      "inbound": 0
+    },
+    {
+      "path": "package.json",
+      "inbound": 0
+    },
+    {
+      "path": "patches/0.1.0.json",
+      "inbound": 0
+    },
+    {
+      "path": "patches/0.2.0.json",
+      "inbound": 0
+    },
+    {
+      "path": "scripts/build.mjs",
+      "inbound": 0
+    },
+    {
+      "path": "scripts/check-unews.mjs",
+      "inbound": 0
+    },
+    {
+      "path": "scripts/check-versions.mjs",
+      "inbound": 0
+    },
+    {
+      "path": "scripts/new-patch.mjs",
+      "inbound": 0
+    },
+    {
+      "path": "scripts/release-core.mjs",
+      "inbound": 6
+    },
+    {
+      "path": "scripts/repo-map.mjs",
+      "inbound": 0
+    },
+    {
+      "path": "site/index.template.html",
+      "inbound": 0
+    },
+    {
+      "path": "tests/release.test.mjs",
+      "inbound": 0
+    },
+    {
+      "path": "version.json",
+      "inbound": 0
+    },
+    {
+      "path": "version.md",
+      "inbound": 0
+    }
+  ],
+  "edges": [
+    {
+      "from": "scripts/build.mjs",
+      "to": "scripts/release-core.mjs",
+      "kind": "relative-reference"
+    },
+    {
+      "from": "scripts/check-unews.mjs",
+      "to": "scripts/release-core.mjs",
+      "kind": "relative-reference"
+    },
+    {
+      "from": "scripts/check-versions.mjs",
+      "to": "scripts/release-core.mjs",
+      "kind": "relative-reference"
+    },
+    {
+      "from": "scripts/new-patch.mjs",
+      "to": "scripts/release-core.mjs",
+      "kind": "relative-reference"
+    },
+    {
+      "from": "scripts/repo-map.mjs",
+      "to": "scripts/release-core.mjs",
+      "kind": "relative-reference"
+    },
+    {
+      "from": "tests/release.test.mjs",
+      "to": "scripts/release-core.mjs",
+      "kind": "relative-reference"
+    }
+  ]
+}
