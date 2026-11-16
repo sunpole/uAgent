@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#0b1020">
+<meta name="description" content="uAgent — открытый проект локального ИИ-агента для Windows: честный журнал разработки, инструкции запуска, архитектура и новости.">
+<meta property="og:title" content="uAgent — локальный ИИ и агент на вашем ПК">
+<meta property="og:description" content="Публичный журнал разработки. От первой модели до безопасного агента с памятью, GitHub и мобильным управлением.">
+<title>uAgent — локальный ИИ-агент · Sunpole</title>
+<style>
+:root{color-scheme:dark;--bg:#090d18;--panel:#131a2a;--edge:#2b354a;--text:#eaf1fb;--muted:#a9b8ce;--blue:#78b6ff;--mint:#7ce0bf;--max:1060px}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;font:16px/1.65 system-ui,-apple-system,"Segoe UI",Arial,sans-serif;color:var(--text);background:radial-gradient(ellipse 80% 40% at 78% -5%,#174462 0%,transparent 70%),var(--bg)}a{color:var(--blue);text-underline-offset:3px}a:hover{color:#bad7ff}a:focus-visible{outline:3px solid var(--mint);outline-offset:4px;border-radius:5px}.wrap{max-width:var(--max);margin:auto;padding:0 24px}.bar{border-bottom:1px solid var(--edge);background:#0b1020cc}.bar .wrap{min-height:74px;display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap;padding-top:12px;padding-bottom:12px}.brand{display:flex;align-items:center;gap:11px;color:var(--text);font-weight:800;letter-spacing:.01em;text-decoration:none;font-size:20px}.mark{display:inline-grid;place-items:center;height:43px;width:43px;border-radius:14px;color:#091420;background:linear-gradient(130deg,#80e4c3,#8dbbff);font-weight:900;letter-spacing:-.07em;box-shadow:0 8px 28px #0dbd9333}.nav{display:flex;flex-wrap:wrap;gap:17px;font-size:14px}.nav a{text-decoration:none;color:var(--muted)}.nav a:hover{color:var(--text)}
+.hero{padding-top:86px;padding-bottom:72px}.eyebrow{display:inline-flex;gap:8px;align-items:center;padding:5px 12px;border:1px solid #436c65;border-radius:999px;background:#15302d;color:#a8f3da;font-size:12px;font-weight:700;letter-spacing:.05em;text-transform:uppercase}.dot{height:7px;width:7px;border-radius:50%;background:#7ce0bf}h1{font-size:clamp(42px,8vw,80px);line-height:1.06;margin:22px 0 22px;letter-spacing:-.065em;max-width:890px}h1 span{background:linear-gradient(95deg,#9bc5ff,#81e3ca);-webkit-background-clip:text;background-clip:text;color:transparent}.lead{font-size:clamp(18px,2vw,22px);max-width:740px;color:var(--muted);line-height:1.6;margin:0}.actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:31px}.btn{display:inline-flex;align-items:center;gap:10px;justify-content:center;border-radius:12px;padding:13px 19px;text-decoration:none;font-weight:700;font-size:14px;min-height:48px;border:1px solid var(--edge);color:var(--text);background:#172236}.btn:hover{background:#253553;color:#fff}.btn.main{color:#09121b;background:linear-gradient(120deg,#8de3cc,#8dbdff);border-color:transparent}.btn.main:hover{filter:brightness(1.1);color:#09121b}.btn svg{width:20px;height:20px;fill:currentColor;flex-shrink:0}
+.metrics{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:48px}.metric{border:1px solid var(--edge);background:#121a29b3;border-radius:16px;padding:19px}.metric strong{display:block;font-size:20px;letter-spacing:-.02em}.metric small{display:block;color:var(--muted);font-size:13px;margin-top:4px}
+section{padding:36px 0}h2{letter-spacing:-.04em;font-size:clamp(27px,3.8vw,38px);line-height:1.2;margin:0 0 13px}p.note{color:var(--muted);max-width:740px;margin:0 0 22px}.cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}.card{border:1px solid var(--edge);background:linear-gradient(160deg,#172134,#101724);padding:24px;border-radius:18px;min-height:180px}.card h3{margin:13px 0 8px;font-size:18px;letter-spacing:-.025em}.card p{margin:0;font-size:14px;color:var(--muted)}.index{color:var(--mint);font-weight:800;font-size:13px}.timeline{list-style:none;padding:0;margin:0;border:1px solid var(--edge);border-radius:18px;overflow:hidden}.timeline li{display:flex;gap:18px;align-items:flex-start;padding:19px 23px;background:#121a29;border-bottom:1px solid var(--edge)}.timeline li:last-child{border:0}.time-dot{height:14px;width:14px;border-radius:50%;border:2px solid #6885aa;margin-top:6px;flex-shrink:0}.done .time-dot{background:var(--mint);border-color:var(--mint)}.timeline strong{display:block}.timeline span{color:var(--muted);font-size:14px}.notice{border:1px solid #3c5369;background:#122132;border-radius:18px;padding:24px;margin-top:24px}.notice strong{display:block;margin-bottom:8px}.notice p{margin:0;color:var(--muted)}.links{display:flex;flex-wrap:wrap;gap:12px;margin-top:20px}footer{padding:34px 0 52px;border-top:1px solid var(--edge);margin-top:48px;font-size:13px;color:var(--muted)}footer .wrap{display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap}.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)}
+@media(max-width:700px){.hero{padding-top:53px;padding-bottom:44px}.metrics,.cards{grid-template-columns:1fr}.metric{padding:14px 18px}.nav{gap:12px}.card{min-height:0}.btn{width:100%}section{padding:25px 0}.timeline li{padding:17px}.bar .wrap{gap:12px}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+
+/* Lightweight release hub — system fonts, no framework or external script */
+.hero-tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:21px}
+.hero-tags span{border:1px solid #375169;border-radius:999px;padding:5px 11px;font-size:12px;color:#a6d6ed;background:#142337}
+#updates{padding-top:48px}.updates-head{display:flex;justify-content:space-between;align-items:end;gap:18px;flex-wrap:wrap}.updates-number{font-size:13px;color:var(--muted)}
+.filter-dock{position:sticky;top:0;z-index:40;background:#0c1421;border:1px solid #354b60;border-radius:16px;padding:14px;margin:20px 0 16px;box-shadow:0 8px 24px #0005}
+.filter-main{display:grid;grid-template-columns:minmax(0,2fr) minmax(125px,1fr) auto;gap:9px;align-items:center}
+.filter-main input,.filter-main select{min-width:0;width:100%;background:#1a2638;color:var(--text);border:1px solid #41516a;border-radius:10px;padding:12px 13px;font:inherit;font-size:15px;min-height:46px}
+.filter-main input:focus,.filter-main select:focus{outline:2px solid #83dcca;outline-offset:1px}
+.filter-main button{border:1px solid #41516a;border-radius:10px;background:#20314a;color:var(--text);font-size:14px;min-height:46px;padding:0 15px;cursor:pointer}
+.tag-cloud{display:flex;flex-wrap:wrap;gap:7px;max-height:100px;overflow:auto;margin-top:11px}
+.tag-cloud .tag{font:inherit;font-size:12px;font-weight:600;border:1px solid #33485e;background:#1a2940;border-radius:999px;color:#b4d8f7;padding:6px 10px;cursor:pointer}
+.tag-cloud .tag:hover,.tag-cloud .tag[aria-pressed="true"]{border-color:#8de3cc;background:#244943;color:#c5ffed}
+.tag-cloud small{color:#8cacc8;margin-left:3px}
+.patch-list{display:grid;gap:12px}.patch-card{border:1px solid #31445c;border-radius:16px;padding:23px;background:linear-gradient(150deg,#16243a,#0e1727);box-shadow:0 7px 22px #0003}
+.patch-top{display:flex;align-items:center;gap:10px;flex-wrap:wrap;color:#9db3cb;font-size:12px}.patch-ver{font-size:14px;font-weight:800;color:#92e6cb}.patch-type{padding:2px 8px;border:1px solid #4a6074;border-radius:999px}.patch-top time{font-variant-numeric:tabular-nums}.confirmed{color:#9ceacb}.draft{color:#eecb94}
+.patch-card h3{font-size:21px;letter-spacing:-.025em;margin:13px 0 6px}.patch-card p{color:var(--muted);margin:0 0 12px;font-size:15px}
+.patch-tags{display:flex;gap:6px;flex-wrap:wrap}.patch-tags span{font-size:12px;color:#a0c7f5;background:#1b3048;padding:3px 8px;border-radius:6px}
+.patch-card details{margin-top:14px;border-top:1px solid #2b4157;padding-top:11px;color:#c2d4e8}.patch-card summary{cursor:pointer;font-size:14px;font-weight:650}
+.patch-card ul{color:var(--muted);font-size:14px;margin:10px 0 0;padding-left:22px}
+.is-hidden{display:none!important}.empty{border:1px dashed #47536a;border-radius:14px;padding:23px;color:var(--muted)}
+@media(max-width:650px){.filter-dock{margin-left:-10px;margin-right:-10px;padding:10px;border-radius:10px}.filter-main{grid-template-columns:1fr 1fr}.filter-main input{grid-column:1/-1}.filter-main button{padding:0 8px}.tag-cloud{max-height:76px}.patch-card{padding:17px}.patch-card h3{font-size:18px}}
+
+</style>
+</head>
+<body>
+<header class="bar"><div class="wrap"><a class="brand" href="./" aria-label="uAgent — главная"><span class="mark" aria-hidden="true">uA</span>uAgent</a><nav class="nav" aria-label="Разделы"><a href="#about">О проекте</a><a href="#roadmap">План</a><a href="#updates">Патчи</a><a href="#progress">Прогресс</a><a href="#links">Ссылки</a></nav></div></header>
+<main>
+<div class="wrap hero">
+<div class="eyebrow"><span class="dot"></span> Публичный репозиторий · Версия v{{VERSION}} · Разработка начата</div>
+<h1>Свой ИИ-агент.<br><span>На своём компьютере.</span></h1>
+<p class="lead">Публичный путь от первого запуска локальной модели до помощника, который понимает проекты, работает с файлами и GitHub и управляется с обычного мобильного браузера.</p>
+<div class="actions">
+<a class="btn main" href="https://github.com/sunpole/uAgent" rel="noopener">Исходный код на GitHub <span aria-hidden="true">↗</span></a>
+<a class="btn" href="https://t.me/uNewsLog" rel="noopener" aria-label="Канал uNews в Telegram">
+<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21.7 3.3a1 1 0 0 0-1-.17L2.8 10.1a1.4 1.4 0 0 0 .12 2.66l4.5 1.47 1.72 5.19a1.2 1.2 0 0 0 2.06.43l2.55-2.66 4.58 3.34a1.5 1.5 0 0 0 2.32-.91l2.06-15.32a1 1 0 0 0-1.01-1ZM9.1 13.25l9.58-7.34-7.2 8.8-.63 2.24-.9-2.72-.85-.28Z"/></svg>
+Telegram · uNews
+</a>
+</div>
+<div class="hero-tags" aria-label="Темы проекта"><span>#LocalAI</span><span>#Agent</span><span>#RepoMap</span><span>#GitHub</span><span>#Windows</span><span>#OpenSource</span><span>#uNews</span><span>#DevLog</span></div>
+<div class="metrics"><div class="metric"><strong>Windows</strong><small>Целевая платформа</small></div><div class="metric"><strong>Local-first</strong><small>Модель и данные под контролем владельца</small></div><div class="metric"><strong>Открытая история</strong><small>Прогресс, инструкции, решения</small></div></div>
+</div>
+<section id="about"><div class="wrap"><h2>Что мы создаём</h2><p class="note">Практичный проект для реального домашнего компьютера, а не демонстрацию возможностей без результата.</p>
+<div class="cards"><article class="card"><span class="index">01 / МОДЕЛЬ</span><h3>Локальный ИИ</h3><p>Подбор и проверка небольших моделей на доступном оборудовании. Измеряем скорость и качество, не обещаем уровень облачных флагманов.</p></article>
+<article class="card"><span class="index">02 / ИНСТРУМЕНТЫ</span><h3>Агент разработки</h3><p>Память проектов, контролируемая работа с кодом, тесты и GitHub. Опасные действия — только после подтверждения.</p></article>
+<article class="card"><span class="index">03 / ДОСТУП</span><h3>Лёгкий веб-пульт</h3><p>Простой интерфейс для старого телефона. Тяжёлые вычисления остаются на домашнем ПК; удалённый доступ защищён.</p></article></div>
+</div></section>
+<section id="roadmap"><div class="wrap"><h2>Дорожная карта</h2><p class="note">Отмечаем выполненное только после проверки. Все этапы доступны в репозитории.</p>
+<ol class="timeline">
+<li class="done"><i class="time-dot" aria-hidden="true"></i><div><strong>01. Репозиторий создан</strong><span>16 ноября 2026 — GitHub, правила безопасности, исходная документация.</span></div></li>
+<li><i class="time-dot" aria-hidden="true"></i><div><strong>02. Первый запуск локальной модели</strong><span>Подбор модели, проверка производительности и русского языка. В работе.</span></div></li>
+<li><i class="time-dot" aria-hidden="true"></i><div><strong>03. Безопасный агент с тестами</strong><span>Изолированные задачи, проверка кода, контроль разрешений.</span></div></li>
+<li><i class="time-dot" aria-hidden="true"></i><div><strong>04. Память и GitHub</strong><span>Документы решений, история задач и Pull Request.</span></div></li>
+<li><i class="time-dot" aria-hidden="true"></i><div><strong>05. Мобильное управление</strong><span>Быстрый веб-интерфейс и защищённое соединение.</span></div></li>
+</ol></div></section>
+<section id="progress"><div class="wrap"><h2>Прогресс и запуск</h2><p class="note">Здесь публикуются подтверждённые результаты разработки. Инструкция по установке будет дополняться по мере появления работающего кода.</p>
+<div class="notice"><strong>Текущий статус: подготовка инфраструктуры</strong><p>Репозиторий создан. Рабочая локальная модель, агент и мобильный пульт пока не представлены. Первые измерения и команды запуска появятся после испытаний — без вымышленных результатов.</p></div>
+<div class="links"><a class="btn" href="https://github.com/sunpole/uAgent/blob/main/docs/PROGRESS.md">Журнал разработки ↗</a><a class="btn" href="https://github.com/sunpole/uAgent/blob/main/docs/LOCAL_SETUP.md">Инструкция по запуску ↗</a></div>
+</div></section>
+<section id="updates" aria-label="История версий и патчей"><div class="wrap">
+<div class="updates-head"><div><h2>Все версии. Все изменения.</h2><p class="note">Живой журнал развития uAgent: самый новый патч наверху. Каждое изменение фиксируется одной глобальной версией.</p></div><span class="updates-number">Версия <strong>v{{VERSION}}</strong> · {{PATCH_COUNT}} записей</span></div>
+<div class="filter-dock" role="search" aria-label="Поиск и фильтрация патчей"><div class="filter-main">
+<input type="search" id="patch-search" placeholder="Поиск: версия, задача, технология..." aria-label="Поиск по истории патчей" autocomplete="off">
+<select id="patch-type" aria-label="Фильтр по типу обновления"><option value="">Все типы</option><option value="foundation">Основа</option><option value="website">Сайт</option><option value="feature">Функции</option><option value="fix">Исправления</option><option value="docs">Документация</option><option value="release">Релизы</option><option value="audit">Аудит</option></select>
+<button type="button" id="patch-clear">Сбросить</button></div>
+<div class="tag-cloud" id="patch-tags" aria-label="Облако тегов">{{TAG_CLOUD}}</div>
+<div class="updates-number" style="margin-top:8px" id="patch-count" aria-live="polite">Записей: {{PATCH_COUNT}}</div></div>
+<div class="patch-list" id="patch-list">{{PATCHES}}</div>
+<p class="empty is-hidden" id="patch-empty">По вашему запросу ничего не найдено. Измените поисковый запрос или сбросьте фильтры.</p>
+</div></section>
+<section id="links"><div class="wrap"><h2>Следите за развитием</h2><p class="note">Обновления и реальные результаты — в GitHub. Готовые новости проекта будут публиковаться в Telegram через систему uNews.</p>
+<div class="actions"><a class="btn main" href="https://t.me/uNewsLog" rel="noopener">Канал «тыНовости» / uNews ↗</a><a class="btn" href="https://github.com/sunpole/uAgent/issues" rel="noopener">Задачи и обсуждения ↗</a></div></div></section>
+</main>
+<footer><div class="wrap"><span>© 2026 Sunpole · uAgent</span><span>GitHub Pages · Минимум JavaScript · Без аналитики и трекеров</span></div></footer>
+<script>
+(function(){
+  var field=document.getElementById("patch-search"), type=document.getElementById("patch-type"), clear=document.getElementById("patch-clear"), tags=document.querySelectorAll("#patch-tags .tag"), cards=document.querySelectorAll("#patch-list .patch-card"), empty=document.getElementById("patch-empty"), counter=document.getElementById("patch-count"), selected="";
+  function filter(){
+    var q=(field.value||"").toLocaleLowerCase().replace(/^\s+|\s+$/g,""),kind=type.value,seen=0;
+    Array.prototype.forEach.call(cards,function(card){
+      var ok=(!q||(card.getAttribute("data-search")||"").indexOf(q)!==-1)&&(!kind||card.getAttribute("data-type")===kind)&&(!selected||("|"+card.getAttribute("data-tags")+"|").indexOf("|"+selected+"|")!==-1);
+      card.className=card.className.replace(/\s*is-hidden/g,"")+(ok?"":" is-hidden");
+      if(ok)seen++;
+    });
+    counter.textContent="Найдено: "+seen+" из "+cards.length;
+    empty.className=seen?"empty is-hidden":"empty";
+  }
+  field.addEventListener("input",filter);type.addEventListener("change",filter);
+  clear.addEventListener("click",function(){field.value="";type.value="";selected="";Array.prototype.forEach.call(tags,function(b){b.setAttribute("aria-pressed","false");});filter();field.focus();});
+  Array.prototype.forEach.call(tags,function(btn){btn.addEventListener("click",function(){var tag=btn.getAttribute("data-tag");selected=(selected===tag?"":tag);Array.prototype.forEach.call(tags,function(b){b.setAttribute("aria-pressed",String(b.getAttribute("data-tag")===selected));});filter();});});
+  filter();
+})();
+</script>
+</body></html>
