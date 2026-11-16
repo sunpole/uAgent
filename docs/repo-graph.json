@@ -4,6 +4,10 @@
   "precision": "file-relative-references-only-not-AST-or-call-graph",
   "nodes": [
     {
+      "path": ".github/workflows/capture-intro.yml",
+      "inbound": 0
+    },
+    {
       "path": ".github/workflows/quality.yml",
       "inbound": 0
     },
@@ -32,6 +36,14 @@
       "inbound": 0
     },
     {
+      "path": "docs/UNEWS_POLICY.md",
+      "inbound": 1
+    },
+    {
+      "path": "news/2026-11-16-uagent-intro.md",
+      "inbound": 0
+    },
+    {
       "path": "news/README.md",
       "inbound": 0
     },
@@ -49,6 +61,10 @@
     },
     {
       "path": "patches/0.2.1.json",
+      "inbound": 0
+    },
+    {
+      "path": "patches/0.2.2.json",
       "inbound": 0
     },
     {
@@ -93,6 +109,11 @@
     }
   ],
   "edges": [
+    {
+      "from": "news/README.md",
+      "to": "docs/UNEWS_POLICY.md",
+      "kind": "relative-reference"
+    },
     {
       "from": "scripts/build.mjs",
       "to": "scripts/release-core.mjs",
