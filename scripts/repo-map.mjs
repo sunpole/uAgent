@@ -2,6 +2,7 @@ import {execFileSync} from "node:child_process";
 import {readFileSync,writeFileSync,existsSync} from "node:fs";
 import {posix} from "node:path";
 import {pathAt} from "./release-core.mjs";
+import {normalizeLineEndings} from "./line-endings.mjs";
 
 const check=process.argv.includes("--check");
 const raw=execFileSync("git",["ls-files","--cached","--others","--exclude-standard"],{cwd:pathAt(),encoding:"utf8"});
@@ -52,7 +53,7 @@ const summary=["# uAgent — карта репозитория","","Эта ка�
 let fail=0;
 for(const [p,value] of [["docs/repo-graph.json",json],["docs/REPO_MAP.md",summary]]){
  const target=pathAt(p);
- if(check){if(!existsSync(target)||readFileSync(target,"utf8")!==value){console.error("Карта устарела: "+p);fail++;}}
+ if(check){if(!existsSync(target)||normalizeLineEndings(readFileSync(target,"utf8"))!==normalizeLineEndings(value)){console.error("Карта устарела: "+p);fail++;}}
  else {writeFileSync(target,value,"utf8");console.log("Обновлено: "+p);}
 }
 if(fail)process.exit(1);

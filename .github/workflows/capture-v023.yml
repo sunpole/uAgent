@@ -1,0 +1,85 @@
+name: Capture verified uAgent 0.2.3 news
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+    branches: [main]
+
+permissions:
+  contents: write
+
+jobs:
+  capture:
+    if: github.event.pull_request.head.repo.full_name == github.repository && github.event.pull_request.head.ref == 'fix/v0.2.3-windows-line-endings'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - name: Checkout trusted project branch
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.ref }}
+          fetch-depth: 0
+      - name: Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Verify source code and prepare generated files
+        run: |
+          set -euo pipefail
+          npm run check:versions
+          npm test
+          npm run build
+          npm run graph
+      - name: Install real Chromium for screenshot
+        run: npx --yes playwright@1.56.1 install --with-deps chromium
+      - name: Capture actual v0.2.3 site and stage release announcement
+        shell: bash
+        run: |
+          set -euo pipefail
+          VERSION=$(node -p "require('./version.json').version")
+          test "$VERSION" = '0.2.3'
+          if compgen -G 'news/*-uagent-windows-line-endings.md' > /dev/null; then
+            echo "News already created; never duplicate."
+            exit 0
+          fi
+          python3 -m http.server 8765 --bind 127.0.0.1 --directory docs >/tmp/uagent-site.log 2>&1 &
+          SITE_PID=$!
+          trap 'kill "$SITE_PID" || true' EXIT
+          for i in 1 2 3 4 5; do curl -fsS http://127.0.0.1:8765/ -o /tmp/uagent.html && break || sleep 1; done
+          grep -q 'v0.2.3' /tmp/uagent.html
+          DATE=$(date -u +%F)
+          FILE="news/${DATE}-uagent-windows-line-endings"
+          npx --yes playwright@1.56.1 screenshot --browser chromium --viewport-size='1600,1000' --wait-for-timeout=1000 http://127.0.0.1:8765/ "${FILE}.png"
+          test $(stat -c %s "${FILE}.png") -gt 5000
+          STAMP=$(date -u +%Y-%m-%dT%H:%M:%SZ)
+          cat > "${FILE}.md" <<EOF
+          ---
+          type: bugfix
+          project: uAgent
+          series: uagent
+          title: uAgent 0.2.3 — исправлена проверка на Windows
+          version: 0.2.3
+          queued_at: ${STAMP}
+          repo_url: https://github.com/sunpole/uAgent
+          web_url: https://sunpole.github.io/uAgent/
+          image: ${DATE}-uagent-windows-line-endings.png
+          image_origin: real
+          ---
+
+          uAgent 0.2.3 — обновление надёжности сборки на Windows.
+
+          Исправлена ложная ошибка синхронизации сайта, версии и README, когда Git использует окончания строк CRLF вместо LF. Реальные расхождения содержимого по-прежнему обнаруживаются. Добавлены единые правила Git и автоматическая проверка карты репозитория.
+
+          На изображении — настоящий снимок сгенерированной страницы uAgent 0.2.3, открытой браузером Chromium в проверочной среде.
+
+          Короткий текст для Telegram:
+          uAgent 0.2.3 — исправлена проверка проекта на Windows. Генератор больше не считает LF и CRLF содержательным изменением. Добавлены автоматические тесты и проверка карты репозитория.
+          EOF
+          npm run graph
+          npm run check
+          git diff --check
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add README.md version.md docs/index.html docs/REPO_MAP.md docs/repo-graph.json "${FILE}.png" "${FILE}.md"
+          git commit -m 'docs(news): attach real screenshot and verified Windows fix post'
+          git push origin "HEAD:${GITHUB_HEAD_REF}"
+          echo 'Release news prepared; real Telegram publication stays in sunpole/uNews.'

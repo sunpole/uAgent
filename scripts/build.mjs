@@ -1,5 +1,6 @@
 import {readFileSync,writeFileSync,existsSync} from "node:fs";
 import {validateRelease,escapeHtml,pathAt} from "./release-core.mjs";
+import {normalizeLineEndings} from "./line-endings.mjs";
 const {current,patches}=validateRelease(),check=process.argv.includes("--check");
 const types={foundation:"Основа",website:"Сайт",feature:"Функция",fix:"Исправление",docs:"Документация",release:"Релиз",audit:"Аудит"};
 const tags=new Map();
@@ -16,12 +17,12 @@ const cards=patches.map(p=>{
  '<div class="patch-tags">'+p.tags.map(t=>'<span>#'+escapeHtml(t)+'</span>').join("")+'</div>'+
  (p.details.length?'<details><summary>Что изменилось</summary><ul>'+p.details.map(d=>'<li>'+escapeHtml(d)+'</li>').join("")+'</ul></details>':'')+'</article>';
 }).join("\n");
-let page=readFileSync(pathAt("site","index.template.html"),"utf8");
+let page=normalizeLineEndings(readFileSync(pathAt("site","index.template.html"),"utf8"));
 for(const [k,v] of Object.entries({"{{VERSION}}":escapeHtml(current.version),"{{PATCH_COUNT}}":String(patches.length),"{{PATCHES}}":cards,"{{TAG_CLOUD}}":cloud,"{{LAST_UPDATED}}":escapeHtml(current.updated)}))page=page.replaceAll(k,v);
 if(/\{\{[A-Z_]+\}\}/.test(page))throw new Error("Остались маркеры шаблона");
 const tick=String.fromCharCode(96);
 const versionMd="# uAgent — версия\n\n**Текущая глобальная версия:** "+tick+current.version+tick+"\n\n**Канал:** "+current.channel+"\n\n**Обновлено:** "+current.updated+"\n\nЕдинственный источник: [version.json](version.json).\nИстория: [patches/](patches/) и [сайт](https://sunpole.github.io/uAgent/#updates).\n";
-let readme=readFileSync(pathAt("README.md"),"utf8");
+let readme=normalizeLineEndings(readFileSync(pathAt("README.md"),"utf8"));
 const start="<!-- UA_VERSION_START -->",end="<!-- UA_VERSION_END -->";
 const a=readme.indexOf(start),b=readme.indexOf(end);
 if(a<0||b<0||b<a)throw new Error("В README отсутствуют маркеры версии");
@@ -29,7 +30,7 @@ readme=readme.slice(0,a+start.length)+"\n**Глобальная версия: v"
 let errors=0;
 for(const [file,content] of [["docs/index.html",page],["version.md",versionMd],["README.md",readme]]){
  const target=pathAt(file);
- if(check){if(!existsSync(target)||readFileSync(target,"utf8")!==content){console.error("Неактуально: "+file);errors++;}}
+ if(check){if(!existsSync(target)||normalizeLineEndings(readFileSync(target,"utf8"))!==normalizeLineEndings(content)){console.error("Неактуально: "+file);errors++;}}
  else{writeFileSync(target,content,"utf8");console.log("Обновлено: "+file);}
 }
 if(errors)process.exit(1);
