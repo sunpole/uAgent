@@ -2,14 +2,16 @@
 
 Эта карта генерируется из файлов проекта: **не** полноценный AST/граф вызовов. Для каждого изменения агент обязан читать актуальные файлы.
 
-Файлов: 22 · подтверждённых относительных ссылок: 6
+Файлов: 26 · подтверждённых относительных ссылок: 7
 
 ## Самые связанные файлы
 
 - scripts/release-core.mjs — входящих ссылок: 6
+- docs/UNEWS_POLICY.md — входящих ссылок: 1
 
 ## Дерево файлов
 
+-     .github/workflows/capture-intro.yml
 -     .github/workflows/quality.yml
 - AGENTS.md
 - README.md
@@ -17,11 +19,14 @@
 -   docs/LOCAL_SETUP.md
 -   docs/PROGRESS.md
 -   docs/RELEASE_POLICY.md
+-   docs/UNEWS_POLICY.md
+-   news/2026-11-16-uagent-intro.md
 -   news/README.md
 - package.json
 -   patches/0.1.0.json
 -   patches/0.2.0.json
 -   patches/0.2.1.json
+-   patches/0.2.2.json
 -   scripts/build.mjs
 -   scripts/check-unews.mjs
 -   scripts/check-versions.mjs
@@ -35,6 +40,7 @@
 
 ## Проверенные локальные связи
 
+- news/README.md → docs/UNEWS_POLICY.md
 - scripts/build.mjs → scripts/release-core.mjs
 - scripts/check-unews.mjs → scripts/release-core.mjs
 - scripts/check-versions.mjs → scripts/release-core.mjs

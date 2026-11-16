@@ -23,6 +23,21 @@ jobs:
           node-version: "22"
       - name: Check version policy and generated site
         run: npm run check
+      - name: Verify current release media with canonical uNews dry-run
+        shell: bash
+        run: |
+          set -euo pipefail
+          git clone --depth 1 https://github.com/sunpole/uNews.git "$RUNNER_TEMP/uNews"
+          VERSION=$(node -p "require('./version.json').version")
+          FOUND=0
+          for item in news/[0-9]*-uagent-*.md; do
+            if [ ! -f "$item" ]; then continue; fi
+            if grep -Fxq "version: ${VERSION}" "$item"; then
+              FOUND=$((FOUND + 1))
+              (cd "$RUNNER_TEMP/uNews" && node scripts/publish-from-projects.js --check "$GITHUB_WORKSPACE/$item")
+            fi
+          done
+          test "$FOUND" -eq 1 || { echo 'Expected exactly one uNews post for current version'; exit 1; }
       - name: Generate repo graph
         run: node scripts/repo-map.mjs
       - name: Ensure repo graph is committed and synchronized

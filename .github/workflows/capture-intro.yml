@@ -1,0 +1,78 @@
+name: Capture authentic uAgent intro
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+    branches: [main]
+
+permissions:
+  contents: write
+
+jobs:
+  capture-real-screenshot:
+    if: github.event.pull_request.head.repo.full_name == github.repository && github.event.pull_request.head.ref == 'feat/v0.2.2-first-ollama-unews-intro'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - name: Checkout owned PR head
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.ref }}
+          fetch-depth: 0
+      - name: Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install browser for genuine screenshot
+        run: npx --yes playwright@1.56.1 install --with-deps chromium
+      - name: Capture real public GitHub Pages and prepare uNews intro
+        shell: bash
+        run: |
+          set -euo pipefail
+          if compgen -G 'news/*-uagent-intro.png' >/dev/null; then
+            echo 'Intro visual already exists; do not replace or duplicate.'
+            exit 0
+          fi
+          curl -fsSL --max-time 30 https://sunpole.github.io/uAgent/ -o /tmp/uagent-pages.html
+          grep -q '<title>uAgent' /tmp/uagent-pages.html
+          DATE=$(date -u +%F)
+          BASE="news/${DATE}-uagent-intro"
+          npx --yes playwright@1.56.1 screenshot --browser chromium --viewport-size='1600,1000' --wait-for-timeout=1200 'https://sunpole.github.io/uAgent/' "${BASE}.png"
+          test $(stat -c %s "${BASE}.png") -gt 5000
+          VERSION=$(node -p "require('./version.json').version")
+          STAMP=$(date -u +%Y-%m-%dT%H:%M:%SZ)
+          cat > "${BASE}.md" <<EOF
+          ---
+          type: intro
+          project: uAgent
+          series: uagent
+          title: uAgent — первый локальный ИИ запущен
+          version: ${VERSION}
+          queued_at: ${STAMP}
+          repo_url: https://github.com/sunpole/uAgent
+          web_url: https://sunpole.github.io/uAgent/
+          image: ${DATE}-uagent-intro.png
+          image_origin: real
+          ---
+
+          uAgent — открытый проект по созданию локального ИИ-агента на Windows.
+
+          Подтверждён первый результат: Ollama 0.40.16 и Qwen2.5-Coder 3B запущены локально. Модель ответила на русском языке и написала Python-код. Скорость двух коротких испытаний: 8,04 и 8,03 токена в секунду. По диагностике 2,5 ГБ памяти, 75% CPU и 25% GPU.
+
+          Пока создана инфраструктура и запущена модель. Автономный агент, память и управление с телефона — следующие этапы.
+
+          Изображение: настоящий снимок действующего публичного сайта проекта, полученный браузером.
+
+          Короткий текст для Telegram:
+          uAgent — первый подтверждённый результат: локальная Qwen2.5-Coder 3B через Ollama работает на Windows. Скорость — 8,03 токена/с; русский язык и Python проверены. Автономный агент и мобильный интерфейс пока в разработке.
+          EOF
+          npm run build
+          npm run graph
+          npm run check
+          git diff --check
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add "${BASE}.png" "${BASE}.md" README.md version.md docs/index.html docs/REPO_MAP.md docs/repo-graph.json
+          git commit -m 'docs(news): capture real uAgent page and prepare first intro'
+          git push origin "HEAD:${GITHUB_HEAD_REF}"
+          echo 'Real screenshot and first intro saved to PR branch; Telegram not directly called.'
