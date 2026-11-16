@@ -1,0 +1,19 @@
+{
+  "name": "uagent",
+  "private": true,
+  "type": "module",
+  "description": "Local-first AI agent project and release hub",
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "check:build": "node scripts/build.mjs --check",
+    "check:versions": "node scripts/check-versions.mjs",
+    "check:unews": "node scripts/check-unews.mjs",
+    "graph": "node scripts/repo-map.mjs",
+    "test": "node --test tests/*.test.mjs",
+    "check": "npm run check:versions && npm run check:unews && npm run check:build && npm test",
+    "patch:new": "node scripts/new-patch.mjs"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
